@@ -1,0 +1,25 @@
+﻿@model WebApplication2.ViewModels.RandomMovieViewModels
+@{
+    ViewBag.Title = "Random";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{ 
+    var className = Model.Customers.Count > 5 ? "popular" : "null";
+}
+
+
+<h2 class="@className">@Model.Movie.Name</h2>
+
+@if (Model.Customers.Count == 0)
+{
+    <text>No customer</text>
+}
+else
+{
+    foreach (var cust in Model.Customers)
+    {
+       <p>@cust.Name</p>
+    }
+}
+
