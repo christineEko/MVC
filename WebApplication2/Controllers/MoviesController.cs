@@ -24,6 +24,13 @@ namespace WebApplication2.Controllers
             return View(movies);
         }
 
+        public ActionResult Details(int id)
+        {
+            var movie = _context.Movies.Include(c => c.Genre).Where(c => c.Id == id).SingleOrDefault();
+
+            return View(movie);
+        }
+
         // GET: Movies
         public ActionResult Random()
         {
