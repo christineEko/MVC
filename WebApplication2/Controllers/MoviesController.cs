@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,6 +11,19 @@ namespace WebApplication2.Controllers
 {
     public class MoviesController : Controller
     {
+        MyDbContext _context;
+
+        public MoviesController()
+        {
+            _context = new MyDbContext();
+        }
+
+        public ActionResult Index()
+        {
+            var movies = _context.Movies.Include(c => c.Genre).ToList();
+            return View(movies);
+        }
+
         // GET: Movies
         public ActionResult Random()
         {

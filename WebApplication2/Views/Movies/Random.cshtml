@@ -17,9 +17,22 @@
 }
 else
 {
-    foreach (var cust in Model.Customers)
-    {
-       <p>@cust.Name</p>
-    }
+    <table>
+        <thead>
+            <tr>Movie</tr>
+            <tr>Genre</tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    @foreach (var cust in Model.Customers)
+                    {
+                        <p>@cust.Name</p>
+                    }
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
 }
 
