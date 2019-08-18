@@ -50,6 +50,13 @@ namespace WebApplication2.Controllers
             return View(randomMovies);
         }
 
+        public ActionResult Edit(int id)
+        {
+            var movie = _context.Movies.FirstOrDefault(m => m.Id == id);
+
+            return View("MovieForm", movie);
+        }
+
         //public ActionResult Edit(int movieId)
         //{
         //    return Content("Id = " + movieId);

@@ -13,8 +13,12 @@ namespace WebApplication2.Models
         [Required]
         [StringLength(255)]
         public String Name { get; set; }
+
         public bool isSubscribedToNewsletter { get; set; }
+
         public MembershipType MembershipType { get; set; }
+
+        [Display(Name = "Membership Type")]
         public byte MembershipTypeId { get; set; }
 
         [Display(Name = "Date of Birth")]
