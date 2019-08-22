@@ -53,9 +53,8 @@ namespace WebApplication2.Controllers
         public ActionResult Edit(int id)
         {
             var movie = _context.Movies.FirstOrDefault(m => m.Id == id);
-			var movieFormViewModel = new MovieFormViewModel
+			var movieFormViewModel = new MovieFormViewModel (movie)
 			{
-				Movie = movie,
 				Genres = _context.Genres.ToList()
 			};
 
@@ -71,8 +70,20 @@ namespace WebApplication2.Controllers
 			return View("MovieForm", movieFormViewModel);
 		}
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
 		public ActionResult Save(Movie movie)
 		{
+            if(!ModelState.IsValid)
+            {
+                var viewModel = new MovieFormViewModel (movie)
+                {
+                    Genres = _context.Genres.ToList()
+                };
+
+                return View("MovieForm", viewModel);
+            }
+
 			if (movie.Id == 0)
 			{
 				_context.Movies.Add(movie);
