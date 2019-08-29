@@ -14,12 +14,14 @@ namespace WebApplication2.Models
         public string Name { get; set; }
 
         [Required]
+		[Display(Name = "Release Date")]
         public DateTime ReleaseDate { get; set; }
 
-        [Required]
-        public DateTime DateAdded { get; set; }
+        public DateTime? DateAdded { get; set; }
 
         [Required]
+		[Display(Name = "Number in stock")]
+        [Range(1,20)]
         public int NumberInStock { get; set; }
 
         public Genre Genre { get; set; }

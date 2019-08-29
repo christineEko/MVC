@@ -53,9 +53,54 @@ namespace WebApplication2.Controllers
         public ActionResult Edit(int id)
         {
             var movie = _context.Movies.FirstOrDefault(m => m.Id == id);
+			var movieFormViewModel = new MovieFormViewModel (movie)
+			{
+				Genres = _context.Genres.ToList()
+			};
 
-            return View("MovieForm", movie);
+			return View("MovieForm", movieFormViewModel);
         }
+
+		public ActionResult New()
+		{
+			var movieFormViewModel = new MovieFormViewModel
+			{
+				Genres = _context.Genres.ToList()
+			};
+			return View("MovieForm", movieFormViewModel);
+		}
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+		public ActionResult Save(Movie movie)
+		{
+            if(!ModelState.IsValid)
+            {
+                var viewModel = new MovieFormViewModel (movie)
+                {
+                    Genres = _context.Genres.ToList()
+                };
+
+                return View("MovieForm", viewModel);
+            }
+
+			if (movie.Id == 0)
+			{
+				_context.Movies.Add(movie);
+			}
+			else
+			{
+				var existingMovie = _context.Movies.Where(m => m.Id == movie.Id).FirstOrDefault();
+				existingMovie.Name = movie.Name;
+				existingMovie.NumberInStock = movie.NumberInStock;
+				existingMovie.ReleaseDate = movie.ReleaseDate;
+				existingMovie.GenreId = movie.GenreId;
+			}
+
+			_context.SaveChanges();
+
+			return RedirectToAction("Index");
+		}
 
         //public ActionResult Edit(int movieId)
         //{
