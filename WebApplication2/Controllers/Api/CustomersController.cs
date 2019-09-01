@@ -5,6 +5,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using WebApplication2.Models;
+using WebApplication2.Dtos;
+using AutoMapper;
 
 namespace WebApplication2.Controllers.Api
 {
@@ -18,40 +20,41 @@ namespace WebApplication2.Controllers.Api
         }
 
         // GET api/<controller>
-        public IEnumerable<Customer> GetCustomers()
+        public IEnumerable<CustomerDto> GetCustomers()
         {
-            return _context.Customers.ToList();
+            return _context.Customers.ToList().Select(Mapper.Map<Customer,CustomerDto>);
         }
 
         // GET api/<controller>/5
-        public Customer GetCustomer(int id)
+        public IHttpActionResult GetCustomer(int id)
         {
             var customerInDb = _context.Customers.SingleOrDefault(c => c.ID == id);
 
             if (customerInDb == null)
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                return NotFound();
 
-            return customerInDb;
+            return Ok(Mapper.Map<Customer,CustomerDto>(customerInDb));
         }
 
         // POST api/<controller>
         [HttpPost]
-        public Customer CreateCustomer(Customer customer)
+        public IHttpActionResult CreateCustomer(CustomerDto customerDto)
         {
             if(!ModelState.IsValid)
             {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                return BadRequest();
             }
 
+            var customer = Mapper.Map<CustomerDto, Customer>(customerDto);
             _context.Customers.Add(customer);
             _context.SaveChanges();
 
-            return customer;
+            return Created(new Uri(Request.RequestUri + "/" + customerDto.ID), customerDto);
         }
 
         // PUT api/<controller>/5
         [HttpPut]
-        public void UpdateCustomer(int id, Customer customer)
+        public void UpdateCustomer(int id, CustomerDto customerDto)
         {
             if (!ModelState.IsValid)
             {
@@ -63,10 +66,7 @@ namespace WebApplication2.Controllers.Api
             if (customerInDb == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
 
-            customerInDb.Name = customer.Name;
-            customerInDb.BirthDate = customer.BirthDate;
-            customerInDb.isSubscribedToNewsletter = customer.isSubscribedToNewsletter;
-            customerInDb.MembershipTypeId = customer.MembershipTypeId;
+            Mapper.Map(customerDto, customerInDb);
 
             _context.SaveChanges();
         }
