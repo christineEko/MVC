@@ -23,5 +23,10 @@ namespace WebApplication2
 
             Mapper.CreateMap<Movie, MovieDto>().ForMember(m => m.Id, opt => opt.Ignore());
         }
+
+        protected override void Configure()
+        {
+            return;
+        }
     }
 }
