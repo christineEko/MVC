@@ -23,7 +23,6 @@ namespace WebApplication2.Controllers.Api
         // GET api/<controller>
         public IEnumerable<CustomerDto> GetCustomers()
         {
-            var test = _context.Customers.ToList().Select(c => c.Id);
             var cust = _context.Customers
                 .Include(c => c.MembershipType)
                 .ToList()
