@@ -8,7 +8,7 @@ namespace WebApplication2.Models
 {
     public class Customer
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "Please enter customer's name")]
         [StringLength(255)]

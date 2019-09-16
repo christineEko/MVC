@@ -14,14 +14,15 @@ namespace WebApplication2
         {
             Mapper.CreateMap<Customer, CustomerDto>();
             Mapper.CreateMap<CustomerDto, Customer>();
+            Mapper.CreateMap<MembershipType, MembershipTypeDto>();
 
-            Mapper.CreateMap<Customer, CustomerDto>().ForMember(m => m.ID, opt => opt.Ignore());
+            Mapper.CreateMap<CustomerDto, Customer>().ForMember(m => m.Id, opt => opt.Ignore());
 
             Mapper.CreateMap<Movie, MovieDto>();
             Mapper.CreateMap<MovieDto, Movie>();
 
 
-            Mapper.CreateMap<Movie, MovieDto>().ForMember(m => m.Id, opt => opt.Ignore());
+            Mapper.CreateMap<MovieDto, Movie>().ForMember(m => m.Id, opt => opt.Ignore());
         }
 
         protected override void Configure()

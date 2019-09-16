@@ -258,6 +258,7 @@
     <Compile Include="Controllers\MoviesController.cs" />
     <Compile Include="DbContext.cs" />
     <Compile Include="Dtos\CustomerDto.cs" />
+    <Compile Include="Dtos\MembershipTypeDto.cs" />
     <Compile Include="Dtos\MovieDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -317,6 +318,14 @@
     <Compile Include="Migrations\201908190310566_updateDateAddedForMovie.cs" />
     <Compile Include="Migrations\201908190310566_updateDateAddedForMovie.Designer.cs">
       <DependentUpon>201908190310566_updateDateAddedForMovie.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909141111507_UpdateCustomerID.cs" />
+    <Compile Include="Migrations\201909141111507_UpdateCustomerID.Designer.cs">
+      <DependentUpon>201909141111507_UpdateCustomerID.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909141114462_UpdateCustomerID2.cs" />
+    <Compile Include="Migrations\201909141114462_UpdateCustomerID2.Designer.cs">
+      <DependentUpon>201909141114462_UpdateCustomerID2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -607,6 +616,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908190310566_updateDateAddedForMovie.resx">
       <DependentUpon>201908190310566_updateDateAddedForMovie.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909141111507_UpdateCustomerID.resx">
+      <DependentUpon>201909141111507_UpdateCustomerID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909141114462_UpdateCustomerID2.resx">
+      <DependentUpon>201909141114462_UpdateCustomerID2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
