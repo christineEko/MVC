@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -22,13 +23,17 @@ namespace WebApplication2.Controllers.Api
         // GET api/<controller>
         public IEnumerable<CustomerDto> GetCustomers()
         {
-            return _context.Customers.ToList().Select(Mapper.Map<Customer,CustomerDto>);
+            var cust = _context.Customers
+                .Include(c => c.MembershipType)
+                .ToList()
+                .Select(Mapper.Map<Customer,CustomerDto>);
+            return cust;
         }
 
         // GET api/<controller>/5
         public IHttpActionResult GetCustomer(int id)
         {
-            var customerInDb = _context.Customers.SingleOrDefault(c => c.ID == id);
+            var customerInDb = _context.Customers.SingleOrDefault(c => c.Id == id);
 
             if (customerInDb == null)
                 return NotFound();
@@ -49,7 +54,7 @@ namespace WebApplication2.Controllers.Api
             _context.Customers.Add(customer);
             _context.SaveChanges();
 
-            return Created(new Uri(Request.RequestUri + "/" + customerDto.ID), customerDto);
+            return Created(new Uri(Request.RequestUri + "/" + customerDto.Id), customerDto);
         }
 
         // PUT api/<controller>/5
@@ -61,7 +66,7 @@ namespace WebApplication2.Controllers.Api
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
 
-            var customerInDb = _context.Customers.SingleOrDefault(c => c.ID == id);
+            var customerInDb = _context.Customers.SingleOrDefault(c => c.Id == id);
 
             if (customerInDb == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
@@ -75,7 +80,7 @@ namespace WebApplication2.Controllers.Api
         [HttpDelete]
         public void DeleteCustomers(int id)
         {
-            var customerInDb = _context.Customers.SingleOrDefault(c => c.ID == id);
+            var customerInDb = _context.Customers.SingleOrDefault(c => c.Id == id);
 
             if (customerInDb == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
